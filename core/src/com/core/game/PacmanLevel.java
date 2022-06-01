@@ -115,9 +115,9 @@ public class PacmanLevel extends BaseScreen {
 		walls[27].setCustomRectangleBoundary(184,110,184,247,198,247,198,110);
 		walls[28].setCustomRectangleBoundary(146,193,146,219,184,219,184,193);
 
-		walls[29].setCustomRectangleBoundary(25,206,25,275,38,275,38,206);
+		walls[29].setCustomRectangleBoundary(25,207,25,275,38,275,38,207);
 		walls[30].setCustomRectangleBoundary(25,262,25,275,225,275,225,262);
-		walls[31].setCustomRectangleBoundary(212,206,212,275,225,275,225,206);
+		walls[31].setCustomRectangleBoundary(212,207,212,275,225,275,225,207);
 
 		pacman = new PhysicsActor();
 		TextureRegion[] framesPac = new TextureRegion[3];
@@ -531,6 +531,8 @@ public class PacmanLevel extends BaseScreen {
 		}
 
 		scoreLable.setText("Score:" + score);
+
+		if(score == 169) Gdx.app.exit();
 	}
 	@Override
 	public boolean scrolled(float amountX, float amountY) {
