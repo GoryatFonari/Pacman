@@ -18,39 +18,6 @@ import java.util.Random;
 public class PacmanLevel extends BaseScreen {
 	public static final int WIDTH = 250;
 
-	private BaseActor wall1;
-	private BaseActor wall2;
-	private BaseActor wall3;
-	private BaseActor wall4;
-	private BaseActor wall5;
-	private BaseActor wall6;
-	private BaseActor wall7;
-	private BaseActor wall8;
-	private BaseActor wall9;
-	private BaseActor wall10;
-	private BaseActor wall11;
-	private BaseActor wall12;
-	private BaseActor wall13;
-	private BaseActor wall14;
-	private BaseActor wall15;
-	private BaseActor wall16;
-	private BaseActor wall17;
-	private BaseActor wall18;
-	private BaseActor wall19;
-	private BaseActor wall20;
-	private BaseActor wall21;
-	private BaseActor wall22;
-	private BaseActor wall23;
-	private BaseActor wall24;
-	private BaseActor wall25;
-	private BaseActor wall26;
-	private BaseActor wall27;
-	private BaseActor wall28;
-	private BaseActor wall29;
-	private BaseActor wall30;
-	private BaseActor wall31;
-	private BaseActor wall32;
-
 	private PhysicsActor pacman;
 	private ArrayList<BaseActor> sunList;
 	private BaseActor[] walls;
@@ -59,6 +26,8 @@ public class PacmanLevel extends BaseScreen {
 	private PhysicsActor ghostPink;
 	private PhysicsActor ghostYellow;
 	private Random random;
+
+	private int ghostSpeed;
 
 	private Label scoreLable;
 	private int score;
@@ -71,9 +40,8 @@ public class PacmanLevel extends BaseScreen {
 	public void create() {
 		random = new Random();
 		score = 0;
-		walls = new BaseActor[]{wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9, wall10,
-				wall11, wall12, wall13, wall14, wall15, wall16, wall17, wall18, wall19, wall20,
-				wall21, wall22, wall23, wall24, wall25, wall26, wall27, wall28, wall29, wall30, wall31, wall32};
+		ghostSpeed = 40;
+		walls = new BaseActor[32];
 		for(int n = 0; n <=31; n++) {
 			walls[n] = new BaseActor();
 			walls[n].setTexture(new Texture((n+1) + ".png"));
@@ -91,8 +59,10 @@ public class PacmanLevel extends BaseScreen {
 		walls[8].setCustomRectangleBoundary(240,0,240,109,250,109,250,109);
 		walls[9].setCustomRectangleBoundary(0,0,0,10,250,10,250,0);
 		walls[10].setCustomRectangleBoundary(25,53,25,94,38,94,38,53);
+
 		walls[11].setCustomRectangleBoundary(25,81,25,94,104,94,104,81);
 		walls[12].setCustomRectangleBoundary(213,53,213,94,226,94,226,53);
+
 		walls[13].setCustomRectangleBoundary(147,81,147,94,225,94,225,81);
 		walls[14].setCustomRectangleBoundary(25,25,25,38,104,38,104,25);
 		walls[15].setCustomRectangleBoundary(53,38,53,66,66,66,66,38);
@@ -131,8 +101,8 @@ public class PacmanLevel extends BaseScreen {
 		Animation animPac = new Animation(0.1f, framesArray, Animation.PlayMode.LOOP);
 		pacman.storeAnimation( "go", animPac );
 		pacman.setOrigin( pacman.getWidth()/2, pacman.getHeight()/2 );
-		pacman.setPosition( 118, 122 );
-		pacman.setRotation(90);
+		pacman.setPosition( 122, 122 );
+		pacman.setRotation(0);
 		pacman.setDefaultRectangleBoundary();
 		mainStage.addActor(pacman);
 
@@ -238,7 +208,7 @@ public class PacmanLevel extends BaseScreen {
 		LabelStyle style = new LabelStyle(font, Color.YELLOW);
 		scoreLable = new Label("Score: 0", style);
 		scoreLable.setFontScale(1);
-		scoreLable.setPosition(0,301);
+		scoreLable.setPosition(0,300);
 		uiStage.addActor(scoreLable);
 	}
 
@@ -267,6 +237,23 @@ public class PacmanLevel extends BaseScreen {
 
 		if(pacman.getX() > WIDTH) pacman.setPosition(0, pacman.getY());
 		if((pacman.getX() + pacman.getWidth()) < 0) pacman.setPosition(WIDTH, pacman.getY());
+
+		/*for(int i = 0; i <= 31; i++) {
+			if (ghostRed.overlaps(walls[i], true) && ghostRed.velocity.y == 40) {
+				ghostRed.setPosition(125,250);
+				ghostRed.setVelocityXY(40,0);
+				if(ghostRed.overlaps(walls[i], ghostRed.velocity.x < 0)) {
+					ghostRed.setVelocityXY(40,0);
+				}
+			}
+			if (ghostRed.overlaps(walls[i], true) && ghostRed.velocity.x == 40) {
+				ghostRed.setVelocityXY(0,-40);
+				if(ghostRed.overlaps(walls[i], ghostRed.velocity.x < 0)) {
+					ghostRed.setVelocityXY(40,0);
+				}
+			}
+		}*/
+
 
 		// RED GHOST
 		if(ghostRed.getX() >= 10 && ghostRed.getX() <= 11 && ghostRed.getY() >= 10 && ghostRed.getY() <= 11) {
@@ -502,8 +489,7 @@ public class PacmanLevel extends BaseScreen {
 				if(r % 2 == 0) ghostYellow.setVelocityXY(55,0);
 				else ghostYellow.setVelocityXY(-55,0);
 			}
-			if(r % 2 == 0) ghostYellow.setVelocityXY(0,-55);
-		}
+			if(r % 2 == 0) ghostYellow.setVelocityXY(0,-55);		}
 
 		//обработка столкновений со стенамии
 		for(int n = 0; n <= 31; n++) {

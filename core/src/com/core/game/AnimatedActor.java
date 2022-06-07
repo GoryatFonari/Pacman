@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AnimatedActor extends BaseActor {
 
     private float elapsedTime;
     private Animation activeAnim;
     private String activeName;
-    private HashMap<String,Animation> animationStorage;
+    private Map<String,Animation> animationStorage;
 
     public AnimatedActor() {
         super();

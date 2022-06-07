@@ -16,18 +16,16 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     protected Stage mainStage;
     protected Stage uiStage;
 
-    public final int viewWidth  = 800;
-    public final int viewHeight = 600;
+    public final int viewWidth  = 250;
+    public final int viewHeight = 300;
 
     private boolean paused;
 
     public BaseScreen(Game g) {
         game = g;
 
-        mainStage = new Stage( new FitViewport(viewWidth, viewHeight) );
-        uiStage   = new Stage( new FitViewport(viewWidth, viewHeight) );
-
-        paused = false;
+        mainStage = new Stage( new FitViewport(viewWidth, 315) );
+        uiStage   = new Stage( new FitViewport(viewWidth, 315) );
 
         InputMultiplexer im = new InputMultiplexer(this, uiStage, mainStage);
         Gdx.input.setInputProcessor( im );
@@ -42,20 +40,13 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     // this is the gameloop. update, then render.
     public void render(float dt) {
         uiStage.act(dt);
-        if ( !isPaused() )
-        {
-            mainStage.act(dt);
-            update(dt);
-        }
+        mainStage.act(dt);
+        update(dt);
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mainStage.draw();
         uiStage.draw();
     }
-
-    public boolean isPaused() {  return paused;  }
-    public void setPaused(boolean b) {  paused = b;  }
-    public void togglePaused() {  paused = !paused;  }
 
     public void resize(int width, int height)
     {
